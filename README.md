@@ -19,3 +19,4 @@ From the repository root:
 
 ```powershell
 .\build-docs-local.ps1
+```
