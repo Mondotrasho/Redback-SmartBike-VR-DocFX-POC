@@ -20,3 +20,6 @@ docs-generated.zip
 !Documentation/Stubs/CinemachineStub/CinemachineStub.csproj
 Documentation/Stubs/**/bin/
 Documentation/Stubs/**/obj/
+
+# Local repository exports
+/*.zip
