@@ -1,0 +1,132 @@
+### YamlMime:TableOfContent
+- name: DocumentationGeneration
+  href: DocumentationGeneration.md
+  items:
+  - name: Example
+    href: DocumentationGeneration.Example.md
+    items:
+    - name: Classes
+      items:
+      - name: DocumentationExample
+        href: DocumentationGeneration.Example.DocumentationExample.md
+- name: Platformer
+  href: Platformer.md
+  items:
+  - name: Core
+    href: Platformer.Core.md
+    items:
+    - name: Classes
+      items:
+      - name: HeapQueue<T>
+        href: Platformer.Core.HeapQueue-1.md
+      - name: Simulation
+        href: Platformer.Core.Simulation.md
+      - name: Simulation.Event
+        href: Platformer.Core.Simulation.Event.md
+      - name: Simulation.Event<T>
+        href: Platformer.Core.Simulation.Event-1.md
+  - name: Gameplay
+    href: Platformer.Gameplay.md
+    items:
+    - name: Classes
+      items:
+      - name: EnablePlayerInput
+        href: Platformer.Gameplay.EnablePlayerInput.md
+      - name: EnemyDeath
+        href: Platformer.Gameplay.EnemyDeath.md
+      - name: HealthIsZero
+        href: Platformer.Gameplay.HealthIsZero.md
+      - name: PlayerDeath
+        href: Platformer.Gameplay.PlayerDeath.md
+      - name: PlayerEnemyCollision
+        href: Platformer.Gameplay.PlayerEnemyCollision.md
+      - name: PlayerEnteredDeathZone
+        href: Platformer.Gameplay.PlayerEnteredDeathZone.md
+      - name: PlayerEnteredVictoryZone
+        href: Platformer.Gameplay.PlayerEnteredVictoryZone.md
+      - name: PlayerJumped
+        href: Platformer.Gameplay.PlayerJumped.md
+      - name: PlayerLanded
+        href: Platformer.Gameplay.PlayerLanded.md
+      - name: PlayerSpawn
+        href: Platformer.Gameplay.PlayerSpawn.md
+      - name: PlayerStopJump
+        href: Platformer.Gameplay.PlayerStopJump.md
+      - name: PlayerTokenCollision
+        href: Platformer.Gameplay.PlayerTokenCollision.md
+  - name: Mechanics
+    href: Platformer.Mechanics.md
+    items:
+    - name: Classes
+      items:
+      - name: AnimationController
+        href: Platformer.Mechanics.AnimationController.md
+      - name: DeathZone
+        href: Platformer.Mechanics.DeathZone.md
+      - name: EnemyController
+        href: Platformer.Mechanics.EnemyController.md
+      - name: GameController
+        href: Platformer.Mechanics.GameController.md
+      - name: Health
+        href: Platformer.Mechanics.Health.md
+      - name: KinematicObject
+        href: Platformer.Mechanics.KinematicObject.md
+      - name: PatrolPath
+        href: Platformer.Mechanics.PatrolPath.md
+      - name: PatrolPath.Mover
+        href: Platformer.Mechanics.PatrolPath.Mover.md
+      - name: PlayerController
+        href: Platformer.Mechanics.PlayerController.md
+      - name: SpawnPoint
+        href: Platformer.Mechanics.SpawnPoint.md
+      - name: TokenController
+        href: Platformer.Mechanics.TokenController.md
+      - name: TokenInstance
+        href: Platformer.Mechanics.TokenInstance.md
+      - name: VictoryZone
+        href: Platformer.Mechanics.VictoryZone.md
+    - name: Enums
+      items:
+      - name: PlayerController.JumpState
+        href: Platformer.Mechanics.PlayerController.JumpState.md
+  - name: Model
+    href: Platformer.Model.md
+    items:
+    - name: Classes
+      items:
+      - name: PlatformerModel
+        href: Platformer.Model.PlatformerModel.md
+  - name: UI
+    href: Platformer.UI.md
+    items:
+    - name: Classes
+      items:
+      - name: MainUIController
+        href: Platformer.UI.MainUIController.md
+      - name: MetaGameController
+        href: Platformer.UI.MetaGameController.md
+  - name: View
+    href: Platformer.View.md
+    items:
+    - name: Classes
+      items:
+      - name: AnimatedTile
+        href: Platformer.View.AnimatedTile.md
+      - name: ParallaxLayer
+        href: Platformer.View.ParallaxLayer.md
+  - name: Classes
+    items:
+    - name: PatrolPathGizmo
+      href: Platformer.PatrolPathGizmo.md
+- name: EmitParticlesOnLand
+  href: Global.EmitParticlesOnLand.md
+- name: Jiggler
+  href: Global.Jiggler.md
+- name: PlatformerJumpPad
+  href: Global.PlatformerJumpPad.md
+- name: PlatformerSpeedPad
+  href: Global.PlatformerSpeedPad.md
+- name: PlayAudioClip
+  href: Global.PlayAudioClip.md
+- name: SimpleTrigger
+  href: Global.SimpleTrigger.md
