@@ -7,11 +7,25 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <!-- MVP scope only. Expand this after the first end-to-end proof works. -->
+    <!--
+      Compile the Unity project's C# source for DocFX metadata generation.
+      Tutorial scripts are excluded because they are not part of this POC.
+    -->
     <Compile Include="../Assets/**/*.cs" Exclude="../Assets/Tutorials/**/*.cs" />
+    <!--
+      Metadata-only stand-in for the Cinemachine types referenced by the
+      sample project. This is not used by the Unity project at runtime.
+    -->
     <ProjectReference Include="Stubs/CinemachineStub/CinemachineStub.csproj" />
   </ItemGroup>
   <Target Name="AddUnityReferences" BeforeTargets="ResolveAssemblyReferences">
+    <!--
+      DocFX compiles the source outside the Unity editor, so the matching
+      Unity managed assemblies need to be supplied explicitly.
+
+      CI places them under lib/UnityEngine. Local builds can use
+      UNITY_MANAGED_PATH or the Unity Hub fallback below.
+    -->
     <PropertyGroup>
       <UnityManagedPath Condition="'$(UNITY_MANAGED_PATH)' != ''">$(UNITY_MANAGED_PATH)</UnityManagedPath>
       <UnityManagedPath Condition="'$(UnityManagedPath)' == '' and Exists('$(MSBuildProjectDirectory)/../lib/UnityEngine')">$(MSBuildProjectDirectory)/../lib/UnityEngine</UnityManagedPath>

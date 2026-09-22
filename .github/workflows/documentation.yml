@@ -6,6 +6,9 @@ on:
   push:
     branches: [main]
 
+# Pull requests validate the documentation build.
+# Pushes to main also publish the generated output to api-docs,
+# so this POC needs write access to repository contents.
 permissions:
   contents: write
   actions: read
@@ -23,6 +26,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      # The project Unity version controls both the managed DLL cache and
+      # the external Unity API reference map used later in the build.
       - name: Read Unity version
         id: unity-version
         shell: bash
@@ -37,6 +42,9 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Unity version: $VERSION"
 
+      # DocFX needs the Unity assemblies to resolve UnityEngine types during
+      # metadata compilation, but the Unity editor itself does not need to run.
+      # The cache avoids extracting the same DLLs again on every build.
       - name: Cache Unity managed DLLs
         id: cache-unity-dlls
         uses: actions/cache@v4
@@ -44,6 +52,8 @@ jobs:
           path: lib/UnityEngine
           key: unity-managed-dlls-${{ steps.unity-version.outputs.version }}-v1
 
+      # On a cache miss, find a matching GameCI editor image that can provide
+      # the managed Unity DLLs required by DocFX.
       - name: Find matching GameCI image
         if: steps.cache-unity-dlls.outputs.cache-hit != 'true'
         id: unity-image
@@ -65,6 +75,8 @@ jobs:
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "Using unityci/editor:$TAG"
 
+      # Copy only the managed UnityEngine assemblies out of the matching
+      # editor image. The full Unity editor is not run as part of this job.
       - name: Extract Unity managed DLLs
         if: steps.cache-unity-dlls.outputs.cache-hit != 'true'
         shell: bash
@@ -81,9 +93,12 @@ jobs:
 
           docker rm unity-editor
 
+      # Restore the DocFX version pinned by the repository tool manifest.
       - name: Restore local tools
         run: dotnet tool restore
 
+      # Download the reference map for this Unity release stream so inherited
+      # Unity API members can link to the matching scripting reference pages.
       - name: Download Unity API xref map
         shell: bash
         run: |
@@ -103,9 +118,13 @@ jobs:
             "https://normanderwan.github.io/UnityXrefMaps/${UNITY_STREAM}/xrefmap.yml" \
             -o docs-generated/unity-xrefmap.yml
 
+      # Generate the raw DocFX Markdown before applying the compatibility
+      # changes needed by the receiving Docusaurus site.
       - name: Generate raw DocFX Markdown
         run: dotnet docfx metadata Documentation/docfx.json
 
+      # Convert the raw DocFX output into the Markdown consumed by the
+      # Docusaurus POC, including the external Unity API reference handling.
       - name: Prepare Docusaurus API Markdown
         shell: pwsh
         run: |
@@ -115,6 +134,8 @@ jobs:
             -UnityXrefMapPath "./docs-generated/unity-xrefmap.yml" `
             -StripKindPrefix
 
+      # Keep both stages as workflow artifacts so generation and
+      # post-processing problems can be inspected separately.
       - name: Upload raw DocFX Markdown
         uses: actions/upload-artifact@v4
         with:
@@ -127,6 +148,8 @@ jobs:
           name: api-markdown
           path: docs-generated/api
 
+      # Pull requests stop after validation. Accepted pushes to main also
+      # replace the machine-generated api-docs branch with the latest output.
       - name: Publish generated Markdown to api-docs branch
         if: github.event_name == 'push'
         shell: bash
